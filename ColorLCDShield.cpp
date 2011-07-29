@@ -102,10 +102,8 @@ void LCDShield::init(int type)
 	
     LCDCommand(DISCTL);  	// display control(EPSON)
     LCDData(0x0C);   		// 12 = 1100 - CL dividing ratio [don't divide] switching period 8H (default)
-	LCDData(0x20);    
-	//LCDData(0x02);
+	LCDData(0x20);
 	LCDData(0x00);
-	
 	LCDData(0x01);
 	
     LCDCommand(COMSCN);  	// common scanning direction(EPSON)
@@ -121,7 +119,7 @@ void LCDShield::init(int type)
     LCDCommand(BSTRON);		//Booset On(PHILLIPS)
 	
 	LCDCommand(DISINV);  	// invert display mode(EPSON)
-	LCDCommand(INVON);		// invert display mode(PHILLIPS)
+	//LCDCommand(INVON);		// invert display mode(PHILLIPS)
     
     LCDCommand(DATCTL);  	// data control(EPSON)
     LCDData(0x03);			//correct for normal sin7
@@ -129,11 +127,12 @@ void LCDShield::init(int type)
 	//LCDData(0x01);		// 8-bit Grayscale
 	LCDData(0x02);			// 16-bit Grayscale Type A
 	
+	LCDCommand(COLMOD);		//Set Color Mode(PHILLIPS)
+	LCDData(0x03);	
+	
 	LCDCommand(MADCTL);		//Memory Access Control(PHILLIPS)
 	LCDData(0xC8);
-	
-	LCDCommand(COLMOD);		//Set Color Mode(PHILLIPS)
-	LCDData(0x02);	
+
 	
     LCDCommand(VOLCTR);  	// electronic volume, this is the contrast/brightness(EPSON)
     //LCDData(0x18);   		// volume (contrast) setting - fine tuning, original
@@ -224,16 +223,19 @@ void LCDShield::setPixel(int color, unsigned char x, unsigned char y)
 	{
 		LCDCommand(PASETP);	// page start/end ram
 		LCDData(x);
-		LCDData(ENDPAGE);
+		LCDData(x);
+		//LCDData(ENDPAGE);
 	
 		LCDCommand(CASETP);	// column start/end ram
 		LCDData(y);
-		LCDData(ENDCOL);
+		LCDData(y);
+		//LCDData(ENDCOL);
 	
 		LCDCommand(RAMWRP);	// write
 		
 		LCDData((unsigned char)((color>>4)&0x00FF));
 		LCDData((unsigned char)(((color&0x0F)<<4)|0x00));
+		//LCDData(NOP);
 	}
 }
 
