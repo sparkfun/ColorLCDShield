@@ -9,6 +9,7 @@
   please attribute, and SHARE-ALIKE!
   
   This is based on code by Mark Sproul, and Peter Davenport.
+  Thanks to Coleman Sellers and Harold Timmis for help getting it to work with the Phillips Driver 7-31-2011
 */
 
 #include "ColorLCDShield.h"
@@ -279,7 +280,7 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 {
 	y	=	(COL_HEIGHT - 1) - y; // make display "right" side up
 	x	=	(ROW_LENGTH - 2) - x;
-
+	
 	int             i,j;
 	unsigned int    nCols;
 	unsigned int    nRows;
@@ -290,50 +291,97 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 	unsigned int    Word1;
 	unsigned char   *pFont;
 	unsigned char   *pChar;
-									
+	
 	// get pointer to the beginning of the selected font table
-	pFont = (unsigned char *)FONT8x16;
+	pFont = (unsigned char *)FONT8x16;				
 	// get the nColumns, nRows and nBytes
 	nCols = *pFont;
 	nRows = *(pFont + 1);
 	nBytes = *(pFont + 2);
 	// get pointer to the last byte of the desired character
 	pChar = pFont + (nBytes * (c - 0x1F)) + nBytes - 1;
-	// Row address set (command 0x2B)
-	LCDCommand(PASET);
-	LCDData(x);
-	LCDData(x + nRows - 1);
-	// Column address set (command 0x2A)
-	LCDCommand(CASET);
-	LCDData(y);
-	LCDData(y + nCols - 1);
-	// WRITE MEMORY
-	LCDCommand(RAMWR);
-	// loop on each row, working backwards from the bottom to the top
-	for (i = nRows - 1; i >= 0; i--) {
-		// copy pixel row from font table and then decrement row
-		PixelRow = *pChar++;
-		// loop on each pixel in the row (left to right)
-		// Note: we do two pixels each loop
-		Mask = 0x80;
-		for (j = 0; j < nCols; j += 2) 
-		{
-			// if pixel bit set, use foreground color; else use the background color
-			// now get the pixel color for two successive pixels
-			if ((PixelRow & Mask) == 0)
-				Word0 = bColor;
-			else
-				Word0 = fColor;
-			Mask = Mask >> 1;
-			if ((PixelRow & Mask) == 0)
-				Word1 = bColor;
-			else
-				Word1 = fColor;
-			Mask = Mask >> 1;
-			// use this information to output three data bytes
-			LCDData((Word0 >> 4) & 0xFF);
-			LCDData(((Word0 & 0xF) << 4) | ((Word1 >> 8) & 0xF));
-			LCDData(Word1 & 0xFF);
+	
+	if (driver)	// if it's an epson
+	{					
+		// Row address set (command 0x2B)
+		LCDCommand(PASET);
+		LCDData(x);
+		LCDData(x + nRows - 1);
+		// Column address set (command 0x2A)
+		LCDCommand(CASET);
+		LCDData(y);
+		LCDData(y + nCols - 1);
+		
+		// WRITE MEMORY
+		LCDCommand(RAMWR);
+		// loop on each row, working backwards from the bottom to the top
+		for (i = nRows - 1; i >= 0; i--) {
+			// copy pixel row from font table and then decrement row
+			PixelRow = *pChar++;
+			// loop on each pixel in the row (left to right)
+			// Note: we do two pixels each loop
+			Mask = 0x80;
+			for (j = 0; j < nCols; j += 2) 
+			{
+				// if pixel bit set, use foreground color; else use the background color
+				// now get the pixel color for two successive pixels
+				if ((PixelRow & Mask) == 0)
+					Word0 = bColor;
+				else
+					Word0 = fColor;
+				Mask = Mask >> 1;
+				if ((PixelRow & Mask) == 0)
+					Word1 = bColor;
+				else
+					Word1 = fColor;
+				Mask = Mask >> 1;
+				// use this information to output three data bytes
+				LCDData((Word0 >> 4) & 0xFF);
+				LCDData(((Word0 & 0xF) << 4) | ((Word1 >> 8) & 0xF));
+				LCDData(Word1 & 0xFF);
+			}
+		}
+	}
+	else
+	{
+		// Row address set (command 0x2B)
+		LCDCommand(PASETP);
+		LCDData(x);
+		LCDData(x + nRows - 1);
+		// Column address set (command 0x2A)
+		LCDCommand(CASETP);
+		LCDData(y);
+		LCDData(y + nCols - 1);
+		
+		// WRITE MEMORY
+		LCDCommand(RAMWRP);
+		// loop on each row, working backwards from the bottom to the top
+		pChar+=nBytes-1;	// stick pChar at the end of the row - gonna reverse print on phillips
+		for (i = nRows - 1; i >= 0; i--) {
+			// copy pixel row from font table and then decrement row
+			PixelRow = *pChar--;
+			// loop on each pixel in the row (left to right)
+			// Note: we do two pixels each loop
+			Mask = 0x01;	// <- opposite of epson
+			for (j = 0; j < nCols; j += 2) 
+			{
+				// if pixel bit set, use foreground color; else use the background color
+				// now get the pixel color for two successive pixels
+				if ((PixelRow & Mask) == 0)
+					Word0 = bColor;
+				else
+					Word0 = fColor;
+				Mask = Mask << 1;	// <- opposite of epson
+				if ((PixelRow & Mask) == 0)
+					Word1 = bColor;
+				else
+					Word1 = fColor;
+				Mask = Mask << 1;	// <- opposite of epson
+				// use this information to output three data bytes
+				LCDData((Word0 >> 4) & 0xFF);
+				LCDData(((Word0 & 0xF) << 4) | ((Word1 >> 8) & 0xF));
+				LCDData(Word1 & 0xFF);
+			}
 		}
 	}
 }
