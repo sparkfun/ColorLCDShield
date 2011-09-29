@@ -20,8 +20,14 @@ extern "C" {
 
 LCDShield::LCDShield()
 {
-	DDRB = ((1<<CS)|(1<<DIO)|(1<<SCK)|(1<<LCD_RES));	//Set the control pins as outputs
-	
+
+#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+  DDRB = ((1<<DIO)|(1<<SCK));	//Set DIO and SCK pins on PORTB as outputs
+  DDRH = ((1<<CS)|(1<<LCD_RES));	//Set CS and RES pins PORTH as outputs
+#else
+  DDRB = ((1<<CS)|(1<<DIO)|(1<<SCK)|(1<<LCD_RES));	//Set the control pins as outputs
+#endif
+
 	DDRD	=	0x00;
 	PORTD	=	0xFF;
 }
@@ -533,3 +539,4 @@ void LCDShield::on(void)
 	else // otherwise it's a phillips
 		LCDCommand(DISPON);
 }
+
