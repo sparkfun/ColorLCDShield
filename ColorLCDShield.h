@@ -14,8 +14,6 @@
 #ifndef ColorLCDShield_H
 #define ColorLCDShield_H
 
-//#define	PHILLIPS
-//#define	EPSON
 #define PHILLIPS	0
 #define EPSON		1
 
@@ -348,16 +346,22 @@ private:
 	
 public:
 	LCDShield();
+
 	void init(int type);
 	void clear(int color);
 	void contrast(char setting);
+
 	void setPixel(int color, unsigned char x, unsigned char y);
 	void setCircle (int x0, int y0, int radius, int color);
+
 	void setChar(char c, int x, int y, int fColor, int bColor);
 	void setStr(char *pString, int x, int y, int fColor, int bColor);
+
 	void setLine(int x0, int y0, int x1, int y1, int color);
 	void setRect(int x0, int y0, int x1, int y1, unsigned char fill, int color);
+
 	void printLogo(void);
+
 	void on(void);
 	void off(void);
 };
