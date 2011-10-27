@@ -14,10 +14,10 @@
 #ifndef ColorLCDShield_H
 #define ColorLCDShield_H
 
-//#define	PHILLIPS
-//#define	EPSON
 #define PHILLIPS	0
 #define EPSON		1
+
+#include <WProgram.h>
 
 #include <inttypes.h>
 
@@ -147,14 +147,15 @@
 #define OPENSOUTHEAST 8
 #define OPENSOUTHWEST 9
 
-#ifdef __AVR_ATmega1280__
-	//*	Arduino Mega bit numbers
+#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
+	//*	Arduino Mega 2560 bit numbers
 	#define LCD_RES		5		// D8
 	#define CS			6		// D9
 	#define DIO			5		// D11
 	#define SCK			7		// D13
 
 	//*	Arduino Mega ports
+	//* NOTE: See LCDShield::LCDShield() if making changes here
 	#define	LCD_PORT_CS		PORTH
 	#define	LCD_PORT_SCK	PORTB
 	#define	LCD_PORT_RES	PORTH
@@ -345,16 +346,22 @@ private:
 	
 public:
 	LCDShield();
+
 	void init(int type);
 	void clear(int color);
 	void contrast(char setting);
+
 	void setPixel(int color, unsigned char x, unsigned char y);
 	void setCircle (int x0, int y0, int radius, int color);
+
 	void setChar(char c, int x, int y, int fColor, int bColor);
 	void setStr(char *pString, int x, int y, int fColor, int bColor);
+
 	void setLine(int x0, int y0, int x1, int y1, int color);
 	void setRect(int x0, int y0, int x1, int y1, unsigned char fill, int color);
+
 	void printLogo(void);
+
 	void on(void);
 	void off(void);
 };
