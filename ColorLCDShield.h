@@ -17,8 +17,6 @@
 #define PHILLIPS	0
 #define EPSON		1
 
-#include <WProgram.h>
-
 #include <inttypes.h>
 
 //*******************************************************
@@ -123,13 +121,13 @@
 #define BROWN		0xB22
 #define CRIMSON 	0xD13
 #define ORCHID 		0xD7D
-#define RED			0xF00
+#define RED		0xF00
 #define MAGENTA		0xF0F
-#define ORANGE 		0xF40
+#define ORANGE	 	0xF40
 #define PINK		0xF6A
 #define CORAL 		0xF75
 #define SALMON 		0xF87
-#define ORANGE		0xFA0
+#define ORANGE2		0xFA0
 #define GOLD 		0xFD0
 #define YELLOW		0xFF0
 #define WHITE		0xFFF
@@ -147,15 +145,14 @@
 #define OPENSOUTHEAST 8
 #define OPENSOUTHWEST 9
 
-#if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
-	//*	Arduino Mega 2560 bit numbers
+#ifdef __AVR_ATmega1280__
+	//*	Arduino Mega bit numbers
 	#define LCD_RES		5		// D8
-	#define CS			6		// D9
-	#define DIO			5		// D11
-	#define SCK			7		// D13
+	#define LCD_CS			6		// D9
+	#define LCD_DIO			5		// D11
+	#define LCD_SCK			7		// D13
 
 	//*	Arduino Mega ports
-	//* NOTE: See LCDShield::LCDShield() if making changes here
 	#define	LCD_PORT_CS		PORTH
 	#define	LCD_PORT_SCK	PORTB
 	#define	LCD_PORT_RES	PORTH
@@ -163,9 +160,9 @@
 #else
 	//*	Arduino Duemilanove bit numbers
 	#define LCD_RES		0		// D8
-	#define CS			1		// D9
-	#define DIO			3		// D11
-	#define SCK			5		// D13
+	#define LCD_CS			1		// D9
+	#define LCD_DIO			3		// D11
+	#define LCD_SCK			5		// D13
 	//#define LCD_PORT	PORTB
 
 	//*	Arduino Duemilanove ports
@@ -346,22 +343,16 @@ private:
 	
 public:
 	LCDShield();
-
 	void init(int type);
 	void clear(int color);
 	void contrast(char setting);
-
 	void setPixel(int color, unsigned char x, unsigned char y);
 	void setCircle (int x0, int y0, int radius, int color);
-
 	void setChar(char c, int x, int y, int fColor, int bColor);
 	void setStr(char *pString, int x, int y, int fColor, int bColor);
-
 	void setLine(int x0, int y0, int x1, int y1, int color);
 	void setRect(int x0, int y0, int x1, int y1, unsigned char fill, int color);
-
 	void printLogo(void);
-
 	void on(void);
 	void off(void);
 };
