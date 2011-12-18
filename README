@@ -3,11 +3,17 @@
 	*          ColorLCDShield          *
 	*                                  *
 	*        an Arduino Library        *
+        *        for Nokia 6100 LCD        *
+        *   with Epson & Phillips chipset  *
 	*                                  *
-	*         by Jim Lindblom          *
+	*         by Jim LINDBLOM          *
 	*       SparkFun Electronics       *
 	*                                  *
+	*	Adapted for Arduino 1.O    *
+	*         By VERHILLE Arnaud       *
+	*                                  *
 	************************************
+
 
 License: CC-BY SA 3.0 - Creative commons share-alike 3.0
 use this code however you'd like, just keep this license and
