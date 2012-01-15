@@ -200,6 +200,8 @@ void displayDigitalTime(int h, int m, int s, int ap)
      unwanted characters */
   timeChar[11] = ' ';
   timeChar[12] = ' ';
+
+  timeChar[13] = 0;
   
   /* Print the time on the clock */
   lcd.setStr(timeChar, CLOCK_CENTER + CLOCK_RADIUS + 4, 22, C_COLOR, BACKGROUND);
