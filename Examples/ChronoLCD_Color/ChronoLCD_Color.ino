@@ -165,7 +165,7 @@ void setTime()
 */
 void displayDigitalTime(int h, int m, int s, int ap)
 {
-  char timeChar[13] = {'x', 'x', 0x0A, 'x', 'x', 0x0A, 'x', 'x'};
+  char timeChar[14] = {'x', 'x', 0x0A, 'x', 'x', 0x0A, 'x', 'x'};
   
   /* Gotta turn the values into individual integers */
   timeChar[0] = h/10;
