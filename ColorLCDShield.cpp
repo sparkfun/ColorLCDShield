@@ -208,6 +208,12 @@ void LCDShield::contrast(char setting)
 	LCDCommand(NOP);         // nop(EPSON)
 }
 
+// Added by Steve Sparks @ Big Nerd Ranch.
+// This swaps the Epson RGB order into the Philips RGB order. (Or, vice versa, I suppose.)
+uint16_t LCDShield::swapColors(uint16_t in) {
+    return ((in & 0x000F)<<8)|(in & 0x00F0)|((in & 0x0F00)>>8);
+}
+
 void LCDShield::setPixel(int color, unsigned char x, unsigned char y)
 {
 	y	=	(COL_HEIGHT - 1) - y;
@@ -230,6 +236,7 @@ void LCDShield::setPixel(int color, unsigned char x, unsigned char y)
 	}
 	else  // otherwise it's a phillips
 	{
+        color = swapColors(color);
 		LCDCommand(PASETP); // page start/end ram
 		LCDData(x);
 		LCDData(x);
@@ -349,6 +356,9 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 	}
 	else
 	{
+        fColor = swapColors(fColor);
+        bColor = swapColors(bColor);
+
 		// Row address set (command 0x2B)
 		LCDCommand(PASETP);
 		LCDData(x);
