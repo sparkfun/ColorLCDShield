@@ -15,6 +15,7 @@
 #define ColorLCDShield_H
 
 #define PHILLIPS	0
+#define PHILIPS     0
 #define EPSON		1
 
 //#include <WProgram.h>
