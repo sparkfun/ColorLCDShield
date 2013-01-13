@@ -202,7 +202,10 @@ void LCDShield::clear(int color)
 
 void LCDShield::contrast(char setting)
 {
-	LCDCommand(VOLCTR);      // electronic volume, this is the contrast/brightness(EPSON)
+	if(driver)	
+		LCDCommand(VOLCTR);      // electronic volume, this is the contrast/brightness(EPSON)
+	else
+		LCDCommand(SETCON);      // this is the contrast (PHILLIPS)
 	LCDData(setting);        // volume (contrast) setting - course adjustment,  -- original was 24
 
 	LCDCommand(NOP);         // nop(EPSON)
