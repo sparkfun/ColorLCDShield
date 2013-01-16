@@ -202,10 +202,19 @@ void LCDShield::clear(int color)
 
 void LCDShield::contrast(char setting)
 {
-	LCDCommand(VOLCTR);      // electronic volume, this is the contrast/brightness(EPSON)
+	if(driver)	
+		LCDCommand(VOLCTR);      // electronic volume, this is the contrast/brightness(EPSON)
+	else
+		LCDCommand(SETCON);      // this is the contrast (PHILLIPS)
 	LCDData(setting);        // volume (contrast) setting - course adjustment,  -- original was 24
 
 	LCDCommand(NOP);         // nop(EPSON)
+}
+
+// Added by Steve Sparks @ Big Nerd Ranch.
+// This swaps the Epson RGB order into the Philips RGB order. (Or, vice versa, I suppose.)
+uint16_t LCDShield::swapColors(uint16_t in) {
+    return ((in & 0x000F)<<8)|(in & 0x00F0)|((in & 0x0F00)>>8);
 }
 
 void LCDShield::setPixel(int color, unsigned char x, unsigned char y)
@@ -230,6 +239,7 @@ void LCDShield::setPixel(int color, unsigned char x, unsigned char y)
 	}
 	else  // otherwise it's a phillips
 	{
+        color = swapColors(color);
 		LCDCommand(PASETP); // page start/end ram
 		LCDData(x);
 		LCDData(x);
@@ -349,6 +359,9 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 	}
 	else
 	{
+        fColor = swapColors(fColor);
+        bColor = swapColors(bColor);
+
 		// Row address set (command 0x2B)
 		LCDCommand(PASETP);
 		LCDData(x);
@@ -395,6 +408,8 @@ void LCDShield::setStr(char *pString, int x, int y, int fColor, int bColor)
 {
 	x = x + 16;
 	y = y + 8;
+    int originalY = y;
+
 	// loop until null-terminator is seen
 	while (*pString != 0x00) {
 		// draw the character
@@ -402,7 +417,11 @@ void LCDShield::setStr(char *pString, int x, int y, int fColor, int bColor)
 		// advance the y position
 		y = y + 8;
 		// bail out if y exceeds 131
-		if (y > 131) break;
+		if (y > 131) {
+            x = x + 16;
+            y = originalY;
+        }
+        if (x > 123) break;
 	}
 }
 

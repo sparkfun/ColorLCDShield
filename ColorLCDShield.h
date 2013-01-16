@@ -15,6 +15,7 @@
 #define ColorLCDShield_H
 
 #define PHILLIPS	0
+#define PHILIPS     0
 #define EPSON		1
 
 //#include <WProgram.h>
@@ -351,7 +352,7 @@ private:
 	void LCDCommand(unsigned char data);
 	void LCDData(unsigned char data);
 	uint8_t driver;
-	
+	uint16_t swapColors(uint16_t in);
 public:
 	LCDShield();
 
