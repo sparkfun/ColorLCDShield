@@ -96,70 +96,80 @@ void LCDShield::LCDData(unsigned char data)
 	LCD_PORT_CS	|=	(1<<CS);  // disable
 }
 
-void LCDShield::init(int type)
+void LCDShield::init(int type, bool colorSwap)
 {
 	driver = type;
+	
+	// Initialize the control pins, and reset display:
+	cbi(LCD_PORT_SCK, SCK_PIN);	// CLK = LOW
+	cbi(LCD_PORT_DIO, DIO);		// DIO = LOW
+	delayMicroseconds(10);		// 10us delay
+	sbi(LCD_PORT_CS, CS);		// CS = HIGH
+	delayMicroseconds(10);		// 10uS Delay
+	cbi(LCD_PORT_RES, LCD_RES);	// RESET = LOW
+	delay(200);					// 200ms delay
+	sbi(LCD_PORT_RES, LCD_RES);	// RESET = HIGH
+	delay(200);					// 200ms delay
+	sbi(LCD_PORT_SCK, SCK_PIN);	// SCK_PIN = HIGH
+	sbi(LCD_PORT_DIO, DIO);		// DIO = HIGH
+	delayMicroseconds(10);		// 10us delay
+	
+	if (driver == EPSON)
+	{
+		LCDCommand(DISCTL);	// Display control (0xCA)
+		LCDData(0x0C);		// 12 = 1100 - CL dividing ratio [don't divide] switching period 8H (default)
+		LCDData(0x20);		// nlines/4 - 1 = 132/4 - 1 = 32 duty
+		LCDData(0x00);		// No inversely highlighted lines
+		
+		LCDCommand(COMSCN);	// common scanning direction (0xBB)
+		LCDData(0x01);		// 1->68, 132<-69 scan direction
+		
+		LCDCommand(OSCON);	// internal oscialltor ON (0xD1)
+		LCDCommand(SLPOUT);	// sleep out (0x94)
+		
+		LCDCommand(PWRCTR);	// power ctrl (0x20)
+		LCDData(0x0F);		// everything on, no external reference resistors
+		
+		LCDCommand(DISINV);	// invert display mode (0xA7)
+		
+		LCDCommand(DATCTL);	// data control (0xBC)
+		LCDData(0x03);		// Inverse page address, reverse rotation column address, column scan-direction	!!! try 0x01
+		LCDData(0x00);		// normal RGB arrangement
+		LCDData(0x02);		// 16-bit Grayscale Type A (12-bit color)
+		
+		LCDCommand(VOLCTR);	// electronic volume, this is the contrast/brightness (0x81)
+		LCDData(32);		// volume (contrast) setting - fine tuning, original (0-63)
+		LCDData(3);			// internal resistor ratio - coarse adjustment (0-7)
+		
+		LCDCommand(NOP);	// nop (0x25)
 
-	delay(200);
+		delay(100);
 
-	cbi(LCD_PORT_SCK, SCK_PIN);     //CLK = LOW
-	cbi(LCD_PORT_DIO, DIO);     //DIO = LOW
-	delayMicroseconds(10);
-	sbi(LCD_PORT_CS, CS);       //CS = HIGH
-	delayMicroseconds(10);
-	cbi(LCD_PORT_RES, LCD_RES); //RESET = LOW
-	delay(200);
-	sbi(LCD_PORT_RES, LCD_RES); //RESET = HIGH
-	delay(200);
-	sbi(LCD_PORT_SCK, SCK_PIN);     // SCK_PIN = HIGH
-	sbi(LCD_PORT_DIO, DIO);     // DIO = HIGH
-	delayMicroseconds(10);
-
-	LCDCommand(DISCTL);   // display control(EPSON)
-	LCDData(0x0C);        // 12 = 1100 - CL dividing ratio [don't divide] switching period 8H (default)
-	LCDData(0x20);
-	LCDData(0x00);
-	LCDData(0x01);
-
-	LCDCommand(COMSCN);   // common scanning direction(EPSON)
-	LCDData(0x01);
-
-	LCDCommand(OSCON);    // internal oscialltor ON(EPSON)
-
-	LCDCommand(SLPOUT);   // sleep out(EPSON)
-	LCDCommand(SLEEPOUT); //sleep out(PHILLIPS)
-
-	LCDCommand(PWRCTR);   // power ctrl(EPSON)
-	LCDData(0x0F);        //everything on, no external reference resistors
-	LCDCommand(BSTRON);   //Booset On(PHILLIPS)
-
-	LCDCommand(DISINV);   // invert display mode(EPSON)
-
-	LCDCommand(DATCTL);   // data control(EPSON)
-	LCDData(0x03);        // correct for normal sin7
-	LCDData(0x00);        // normal RGB arrangement
-	LCDData(0x02);        // 16-bit Grayscale Type A
-
-	LCDCommand(COLMOD);   // Set Color Mode(PHILLIPS)
-	LCDData(0x03);
-
-	LCDCommand(MADCTL);   // Memory Access Control(PHILLIPS)
-	LCDData(0xC8);
-
-
-	LCDCommand(VOLCTR);   // electronic volume, this is the contrast/brightness(EPSON)
-	LCDData(0x24);        // volume (contrast) setting - fine tuning, original
-	LCDData(0x03);        // internal resistor ratio - coarse adjustment
-	LCDCommand(SETCON);   // Set Contrast(PHILLIPS)
-	LCDData(0x30);
-
-	LCDCommand(NOP);      // nop(EPSON)
-	LCDCommand(NOPP);     // nop(PHILLIPS)
-
-	delayMicroseconds(200);
-
-	LCDCommand(DISON);    // display on(EPSON)
-	LCDCommand(DISPON);   // display on(PHILLIPS)
+		LCDCommand(DISON);	// display on (0xAF)
+	}
+	else if (driver == PHILIPS)
+	{
+		LCDCommand(SLEEPOUT);	// Sleep Out (0x11)
+		LCDCommand(BSTRON);   	// Booster voltage on (0x03)
+		LCDCommand(DISPON);		// Display on (0x29)
+		
+		//LCDCommand(INVON);		// Inversion on (0x20)
+		
+		// 12-bit color pixel format:
+		LCDCommand(COLMOD);		// Color interface format (0x3A)
+		LCDData(0x03);			// 0b011 is 12-bit/pixel mode
+		
+		LCDCommand(MADCTL);		// Memory Access Control(PHILLIPS)
+		if (colorSwap) 
+			LCDData(0x08);
+		else
+			LCDData(0x00);
+		
+		LCDCommand(SETCON);		// Set Contrast(PHILLIPS)
+		LCDData(0x30);
+		
+		LCDCommand(NOPP);		// nop(PHILLIPS)
+	}
 }
 
 void LCDShield::clear(int color)
@@ -202,13 +212,19 @@ void LCDShield::clear(int color)
 
 void LCDShield::contrast(char setting)
 {
-	if(driver)	
-		LCDCommand(VOLCTR);      // electronic volume, this is the contrast/brightness(EPSON)
-	else
-		LCDCommand(SETCON);      // this is the contrast (PHILLIPS)
-	LCDData(setting);        // volume (contrast) setting - course adjustment,  -- original was 24
-
-	LCDCommand(NOP);         // nop(EPSON)
+	if (driver == EPSON)
+	{
+		setting &= 0x3F;	// 2 msb's not used, mask out
+		LCDCommand(VOLCTR);	// electronic volume, this is the contrast/brightness(EPSON)
+		LCDData(setting);	// volume (contrast) setting - course adjustment,  -- original was 24
+		LCDData(3);			// TODO: Make this coarse adjustment variable, 3's a good place to stay
+	}
+	else if (driver == PHILIPS)
+	{
+		setting &= 0x7F;	// msb is not used, mask it out
+		LCDCommand(SETCON);	// contrast command (PHILLIPS)
+		LCDData(setting);	// volume (contrast) setting - course adjustment,  -- original was 24
+	}
 }
 
 // Added by Steve Sparks @ Big Nerd Ranch.
@@ -222,7 +238,7 @@ void LCDShield::setPixel(int color, unsigned char x, unsigned char y)
 	y	=	(COL_HEIGHT - 1) - y;
 	x = (ROW_LENGTH - 1) - x;
 
-	if (driver) // if it's an epson
+	if (driver == EPSON) // if it's an epson
 	{
 		LCDCommand(PASET);  // page start/end ram
 		LCDData(x);
@@ -237,9 +253,8 @@ void LCDShield::setPixel(int color, unsigned char x, unsigned char y)
 		LCDData(((color&0x0F)<<4)|(color>>8));
 		LCDData(color&0x0FF);
 	}
-	else  // otherwise it's a phillips
+	else if (driver == PHILIPS)  // otherwise it's a phillips
 	{
-        color = swapColors(color);
 		LCDCommand(PASETP); // page start/end ram
 		LCDData(x);
 		LCDData(x);

@@ -25,8 +25,8 @@ LCDShield lcd;
 
 void setup()
 {
-  lcd.init(EPSON);  // This should only be init(EPSON) or init(PHILLIPS)
-  lcd.contrast(44);  // Feel free to change this for visibility, values between 0 and 60
+  lcd.init(PHILIPS);  // Try EPSON if this doesn't work. If colors are swapped try init(PHILIPS, 1)
+  lcd.contrast(-51);  // Feel free to change this for visibility, values between 0 and 60
   lcd.clear(BACKGROUND);
   
   // Initilize all circles' center points

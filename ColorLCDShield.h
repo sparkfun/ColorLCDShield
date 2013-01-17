@@ -356,7 +356,7 @@ private:
 public:
 	LCDShield();
 
-	void init(int type);
+	void init(int type, bool colorSwap = 0);
 	void clear(int color);
 	void contrast(char setting);
 

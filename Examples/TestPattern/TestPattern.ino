@@ -19,17 +19,21 @@
 LCDShield lcd;
 
 int buttons[3] = {3, 4, 5};  // S1 = 3, S2 = 4, S3 = 5
-byte cont = 40;  // Good center value for contrast
+signed char cont = -51;  // Philips medium contrast
+//signed char cont = 40;  // Epson medium contrast
 
 void setup()
 {
+  Serial.begin(9600);
   for (int i=0; i<3; i++)
   {
     pinMode(buttons[i], INPUT);  // Set buttons as inputs
     digitalWrite(buttons[i], HIGH);  // Activate internal pull-up
   }
   
-  lcd.init(EPSON);  // Initialize the LCD, try using PHILLIPS if it's not working
+  // Initialize the LCD, try using EPSON if it's not working
+  lcd.init(PHILIPS);  
+  // lcd.init(PHILIPS, 1);  // Philips init with colors swapped. (Try this if red makes blue, etc).
   lcd.contrast(cont);  // Initialize contrast
   lcd.clear(WHITE);  // Set background to white
   lcd.printLogo();  // Print SparkFun test logo
@@ -43,20 +47,21 @@ void loop()
   if (!digitalRead(buttons[0]))  // If S1 is hit, increase contrast
   {
     cont++;
-    if (cont >= 60)
-      cont = 0;
+    if (cont > 63) // Philips contrast goes from 63 to -64
+      cont = -64;
   }
   else if (!digitalRead(buttons[1]))  // If s2 is hit, decrease contrast
   {
     cont--;
-    if (cont >= 60)
-      cont = 59;
+    if (cont < -64)
+      cont = 63;
   }
   else if (!digitalRead(buttons[2]))  // If S3 is hit, reset contrast
   {
-    cont = 38;
+    cont = 0;
   }
   lcd.contrast(cont);  // give LCD contrast command
+  Serial.println(cont);
   
   delay(100);  // Delay to give each button press a little more meaning
 }

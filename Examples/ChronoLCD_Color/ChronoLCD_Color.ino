@@ -30,11 +30,11 @@
 #define SECONDS 00
 #define AMPM 0  // enter 0 for AM, 1 for PM
 
-#define CLOCK_RADIUS 50  // radius of clock face
-#define CLOCK_CENTER 55  // If you adjust the radius, you'll probably want to adjust this
-#define H_LENGTH  30  // length of hour hand
-#define M_LENGTH  40  // length of minute hand
-#define S_LENGTH  48  // length of second hand
+#define CLOCK_RADIUS 45  // radius of clock face
+#define CLOCK_CENTER 50  // If you adjust the radius, you'll probably want to adjust this
+#define H_LENGTH  25  // length of hour hand
+#define M_LENGTH  35  // length of minute hand
+#define S_LENGTH  43  // length of second hand
 
 #define BACKGROUND  BLACK  // room for growth, adjust the background color according to daylight
 #define C_COLOR  RED  // This is the color of the clock face, and digital clock
@@ -62,8 +62,8 @@ void setup()
   ampm = AMPM;
   
   /* Initialize the LCD, set the contrast, clear the screen */
-  lcd.init(EPSON);
-  lcd.contrast(40);
+  lcd.init(PHILIPS);
+  lcd.contrast(-63);
   lcd.clear(BACKGROUND);
   
   drawClock();  // Draw the clock face, this includes 12, 3, 6, 9
@@ -165,44 +165,19 @@ void setTime()
 */
 void displayDigitalTime(int h, int m, int s, int ap)
 {
-  char timeChar[13] = {'x', 'x', 0x0A, 'x', 'x', 0x0A, 'x', 'x', ' ', ' '};
+  char timeChar[12];
   
-  /* Gotta turn the values into individual integers */
-  timeChar[0] = h/10;
-  timeChar[1] = h - (timeChar[0] * 10);
-  timeChar[3] = m/10;
-  timeChar[4] = m - (timeChar[3] * 10);
-  timeChar[6] = s/10;
-  timeChar[7] = s - (timeChar[6] * 10);
-  
-  /* once we have each integer separated, we need to turn them
-     into displayable characters. Adding 0x30 does this (check an
-     ASCII table. We set the colons to 0x0A initially, this will
-     turn them into the proper 0x3A.*/
-  for (int i=0; i<8; i++)
-    timeChar[i] += 0x30;
-    
-  timeChar[8] = ' ';  // add a space between the time and AM/PM
-  
-  /* Add AM or PM to the end of the timeChar string */
   if (!ap)
   {
-    timeChar[9] = 'A';
-    timeChar[10] = 'M';
+    sprintf(timeChar, "%.2d:%.2d:%.2d AM", h, m, s);
   }
   else
   {
-    timeChar[9] = 'P';
-    timeChar[10] = 'M';
+    sprintf(timeChar, "%.2d:%.2d:%.2d PM", h, m, s);
   }
-  
-  /* add some blank spaces after the time, otherwise it'll display
-     unwanted characters */
-  timeChar[11] = ' ';
-  timeChar[12] = ' ';
-  
   /* Print the time on the clock */
-  lcd.setStr(timeChar, CLOCK_CENTER + CLOCK_RADIUS + 4, 22, C_COLOR, BACKGROUND);
+  lcd.setStr(timeChar, CLOCK_CENTER + CLOCK_RADIUS + 4, 22, 
+              C_COLOR, BACKGROUND);
 }
 
 /*
