@@ -8,6 +8,8 @@ The Color LCD Shield interfaces your Arduino with a knock-off [132x132 Nokia 610
 
 A really great resource for working with both the Epson and Philips controllers is Jim Lynch's [Display Driver tutorial](http://www.sparkfun.com/tutorial/Nokia%206100%20LCD%20Display%20Driver.pdf). Much of this example code stems from that document.
 
+For a more in-depth look at this library, check out my [Color LCD Shield Quickstart Guide](http://www.sparkfun.com/tutorials/286) on SparkFun.
+
 ## License
 Creative Commons Share-alike 3.0 ([CC-BY SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)). Use this code however you'd like, just keep this license and attribute. Let us know if you make hugely, awesome, great changes.
 
