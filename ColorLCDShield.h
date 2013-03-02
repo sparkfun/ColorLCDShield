@@ -124,7 +124,7 @@
 #define BROWN		0xB22
 #define CRIMSON 	0xD13
 #define ORCHID 		0xD7D
-#define RED			0xF00
+#define RED		0xF00
 #define MAGENTA		0xF0F
 #define ORANGE 		0xF40
 #define PINK		0xF6A
@@ -137,15 +137,19 @@
 //*******************************************************
 //                              Circle Definitions
 //*******************************************************
-#define FULLCIRCLE 1
-#define OPENSOUTH  2
-#define OPENNORTH  3
-#define OPENEAST   4
-#define OPENWEST   5
-#define OPENNORTHEAST 6
-#define OPENNORTHWEST 7
-#define OPENSOUTHEAST 8
-#define OPENSOUTHWEST 9
+#define FILL 0
+
+//******************************************************
+//                       Arc Definitions
+//******************************************************
+#define ESE 1
+#define ENE 2
+#define WSW 3
+#define WNW 4
+#define SSE 5
+#define NNE 6
+#define SSW 7
+#define NNW 8
 
 #if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
 	//*	Arduino Mega 2560 bit numbers
@@ -361,10 +365,12 @@ public:
 	void contrast(char setting);
 
 	void setPixel(int color, unsigned char x, unsigned char y);
-	void setCircle (int x0, int y0, int radius, int color);
+	void setCircle (int x0, int y0, int radius,int lineThickness, int color);
+	void setArc(int x0, int y0, int radius, int segments[], int numSegments, int lineThickness, int color);
 
 	void setChar(char c, int x, int y, int fColor, int bColor);
 	void setStr(char *pString, int x, int y, int fColor, int bColor);
+	
 
 	void setLine(int x0, int y0, int x1, int y1, int color);
 	void setRect(int x0, int y0, int x1, int y1, unsigned char fill, int color);
