@@ -269,41 +269,90 @@ void LCDShield::setPixel(int color, unsigned char x, unsigned char y)
 		LCDData((unsigned char)(((color&0x0F)<<4)|0x00));
 	}
 }
-
-void LCDShield::setCircle (int x0, int y0, int radius, int color)
+// 2/18/2013 This Methos added by Tony Contrada in order to create arc segments in varied line thickness, or Filled
+void LCDShield::setArc(int x0, int y0, int radius, int arcSegments[], int numSegments, int lineThickness, int color)
 {
-	int f = 1 - radius;
-	int ddF_x = 0;
-	int ddF_y = -2 * radius;
-	int x = 0;
-	int y = radius;
-
-	setPixel(color, x0, y0 + radius);
-	setPixel(color, x0, y0 - radius);
-	setPixel(color, x0 + radius, y0);
-	setPixel(color, x0 - radius, y0);
-
-	while(x < y)
+	//Line Thickness (Num Pixels)
+	if(lineThickness == FILL) lineThickness = radius;
+	for(int i = 0; i < lineThickness; i++)
 	{
-		if(f >= 0)
+		int f = 1 - radius;
+		int ddF_x = 0;
+		int ddF_y = -2 * radius;
+		int x = 0;
+		int y = radius;
+		while(x < y)
 		{
-			y--;
-			ddF_y += 2;
-			f += ddF_y;
-		}
-		x++;
-		ddF_x += 2;
-		f += ddF_x + 1;
+			if(f >= 0)
+			{
+				y--;
+				ddF_y += 2;
+				f += ddF_y;
+			}
+			x++;
+			ddF_x += 2;
+			f += ddF_x + 1;
 
-		setPixel(color, x0 + x, y0 + y);
-		setPixel(color, x0 - x, y0 + y);
-		setPixel(color, x0 + x, y0 - y);
-		setPixel(color, x0 - x, y0 - y);
-		setPixel(color, x0 + y, y0 + x);
-		setPixel(color, x0 - y, y0 + x);
-		setPixel(color, x0 + y, y0 - x);
-		setPixel(color, x0 - y, y0 - x);
+			for(int i = 0; i < numSegments; i++)
+			{
+				if(arcSegments[i] == NNE) setPixel(color, x0 - y, y0 + x); //SHOW NNE
+				if(arcSegments[i] == ENE) setPixel(color, x0 - x, y0 + y); //SHOW ENE
+				if(arcSegments[i] == ESE) setPixel(color, x0 + x, y0 + y); //SHOW ESE
+				if(arcSegments[i] == SSE) setPixel(color, x0 + y, y0 + x); //SHOW SSE
+				if(arcSegments[i] == SSW) setPixel(color, x0 + y, y0 - x); //SHOW SSW
+				if(arcSegments[i] == WSW) setPixel(color, x0 + x, y0 - y); //SHOW WSW 
+				if(arcSegments[i] == WNW) setPixel(color, x0 - x, y0 - y); //SHOW WNW
+				if(arcSegments[i] == NNW) setPixel(color, x0 - y, y0 - x); //SHOW NNW
+			}
+		
+		}
+		radius--;
 	}
+
+}
+
+// 2/22/2013 - Modified by Tony Contrada to include Line Thickness (in pixels) or a Filled Circle
+void LCDShield::setCircle (int x0, int y0, int radius, int lineThickness, int color)
+{
+	if(lineThickness == FILL) lineThickness = radius;
+	
+	for(int r = 0; r < lineThickness; r++)
+	{
+		int f = 1 - radius;
+		int ddF_x = 0;
+		int ddF_y = -2 * radius;
+		int x = 0;
+		int y = radius;
+
+		setPixel(color, x0, y0 + radius);
+		setPixel(color, x0, y0 - radius);
+		setPixel(color, x0 + radius, y0);
+		setPixel(color, x0 - radius, y0);
+
+		while(x < y)
+		{
+			if(f >= 0)
+			{
+				y--;
+				ddF_y += 2;
+				f += ddF_y;
+			}
+			x++;
+			ddF_x += 2;
+			f += ddF_x + 1;
+
+			setPixel(color, x0 + x, y0 + y);
+			setPixel(color, x0 - x, y0 + y);
+			setPixel(color, x0 + x, y0 - y);
+			setPixel(color, x0 - x, y0 - y);
+			setPixel(color, x0 + y, y0 + x);
+			setPixel(color, x0 - y, y0 + x);
+			setPixel(color, x0 + y, y0 - x);
+			setPixel(color, x0 - y, y0 - x);
+		}
+		radius--;
+	}
+
 }
 
 void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
@@ -419,6 +468,7 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 	}
 }
 
+
 void LCDShield::setStr(char *pString, int x, int y, int fColor, int bColor)
 {
 	x = x + 16;
@@ -491,9 +541,9 @@ void LCDShield::setLine(int x0, int y0, int x1, int y1, int color)
 				x0 += stepx;
 				fraction -= dy;
 			}
-		y0 += stepy;
-		fraction += dx;
-		setPixel(color, x0, y0);
+			y0 += stepy;
+			fraction += dx;
+			setPixel(color, x0, y0);
 		}
 	}
 }

@@ -8,8 +8,6 @@ The Color LCD Shield interfaces your Arduino with a knock-off [132x132 Nokia 610
 
 A really great resource for working with both the Epson and Philips controllers is Jim Lynch's [Display Driver tutorial](http://www.sparkfun.com/tutorial/Nokia%206100%20LCD%20Display%20Driver.pdf). Much of this example code stems from that document.
 
-For a more in-depth look at this library, check out my [Color LCD Shield Quickstart Guide](http://www.sparkfun.com/tutorials/286) on SparkFun.
-
 ## License
 Creative Commons Share-alike 3.0 ([CC-BY SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)). Use this code however you'd like, just keep this license and attribute. Let us know if you make hugely, awesome, great changes.
 
@@ -45,8 +43,11 @@ For Epson, a value between 0 and 63 should be passed. 40 works pretty well for m
 ###void setPixel(int color, unsigned char x, unsigned char y)
 Draws a single pixel at the specified x, y location. Color is a 12-bit RGB value.
 
-###void setCircle (int x0, int y0, int radius, int color)
-Draws a circle centered around x0, y0, of the specified radius and color. Radius is in pixels, color is a 12-bit RGB value.
+###void setArc(int x0, int y0, int radius, int segments[], int numSegments, int lineThickness, int color)
+Draws an Arc centered at x0, y0 with the specified radius with the array of quadrant segments (NNE,ENE,ESE,SSE,SSW,WSW,WNW,NNW), number of quadrant segments, with the specified line thickness in pixels, or FILL to fill quadrant and color 12 bit RGB value.
+
+###void setCircle (int x0, int y0, int radius, int lineThickness, int color)
+Draws a circle centered around x0, y0, of the specified radius and color. Radius is in pixels, color is a 12-bit RGB value. LineThickness in Pixels or FILL to fill in circle.
 
 ###void setChar(char c, int x, int y, int fColor, int bColor)
 Sets a single character down at the specified x/y coordinate. You can pick both the foregroundand background color, they're 12-bit RGB values. Only one font is available in this library. Definitely room for growth, though at an added cost of memory.
