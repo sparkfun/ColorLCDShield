@@ -21,6 +21,7 @@ setStr	KEYWORD2
 setLine	KEYWORD2
 setRect	KEYWORD2
 setCircle	KEYWORD2
+setArc	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
