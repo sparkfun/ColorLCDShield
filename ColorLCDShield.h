@@ -365,7 +365,7 @@ public:
 	void contrast(char setting);
 
 	void setPixel(int color, unsigned char x, unsigned char y);
-	void setCircle (int x0, int y0, int radius,int lineThickness, int color);
+	void setCircle (int x0, int y0, int radius, int color, int lineThickness = 1);
 	void setArc(int x0, int y0, int radius, int segments[], int numSegments, int lineThickness, int color);
 
 	void setChar(char c, int x, int y, int fColor, int bColor);

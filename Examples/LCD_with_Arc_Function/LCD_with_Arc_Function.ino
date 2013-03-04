@@ -26,10 +26,10 @@ void setup()
   lcd.setArc(60,50,40,segments,sizeof(segments),FILL,GREEN);
   
   //Creates PINK Circle with a FILL
-  lcd.setCircle(90,100,20,FILL,PINK);
+  lcd.setCircle(90,100,20,PINK,FILL);
   
   //Creates CYAN Circle with a Line Thickness of 3 Pixels
-  lcd.setCircle(90,35,25,3,CYAN);
+  lcd.setCircle(90,35,25,CYAN,3);
 
 }
 

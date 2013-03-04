@@ -312,7 +312,7 @@ void LCDShield::setArc(int x0, int y0, int radius, int arcSegments[], int numSeg
 }
 
 // 2/22/2013 - Modified by Tony Contrada to include Line Thickness (in pixels) or a Filled Circle
-void LCDShield::setCircle (int x0, int y0, int radius, int lineThickness, int color)
+void LCDShield::setCircle (int x0, int y0, int radius, int color, int lineThickness)
 {
 	if(lineThickness == FILL) lineThickness = radius;
 	

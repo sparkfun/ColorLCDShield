@@ -46,8 +46,8 @@ Draws a single pixel at the specified x, y location. Color is a 12-bit RGB value
 ###void setArc(int x0, int y0, int radius, int segments[], int numSegments, int lineThickness, int color)
 Draws an Arc centered at x0, y0 with the specified radius with the array of quadrant segments (NNE,ENE,ESE,SSE,SSW,WSW,WNW,NNW), number of quadrant segments, with the specified line thickness in pixels, or FILL to fill quadrant and color 12 bit RGB value.
 
-###void setCircle (int x0, int y0, int radius, int lineThickness, int color)
-Draws a circle centered around x0, y0, of the specified radius and color. Radius is in pixels, color is a 12-bit RGB value. LineThickness in Pixels or FILL to fill in circle.
+###void setCircle (int x0, int y0, int radius, int color, int lineThickness)
+Draws a circle centered around x0, y0, of the specified radius and color. Radius is in pixels, color is a 12-bit RGB value. LineThickness in Pixels or FILL to fill in circle (defaults to 1 pixel if not specified).
 
 ###void setChar(char c, int x, int y, int fColor, int bColor)
 Sets a single character down at the specified x/y coordinate. You can pick both the foregroundand background color, they're 12-bit RGB values. Only one font is available in this library. Definitely room for growth, though at an added cost of memory.
