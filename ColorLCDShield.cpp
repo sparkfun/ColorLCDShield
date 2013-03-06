@@ -441,7 +441,7 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 		pChar+=nBytes-1;  // stick pChar at the end of the row - gonna reverse print on phillips
 		for (i = nRows - 1; i >= 0; i--) {
 			// copy pixel row from font table and then decrement row
-			PixelRow = *pChar--;
+			PixelRow = pgm_read_byte(pChar--);
 			// loop on each pixel in the row (left to right)
 			// Note: we do two pixels each loop
 			Mask = 0x01;  // <- opposite of epson
