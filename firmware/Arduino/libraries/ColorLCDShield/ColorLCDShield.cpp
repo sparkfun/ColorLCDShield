@@ -368,15 +368,15 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 	unsigned char   Mask;
 	unsigned int    Word0;
 	unsigned int    Word1;
-	unsigned char   *pFont;
-	unsigned char   *pChar;
+	prog_uchar   *pFont;
+	prog_uchar   *pChar;
 
 	// get pointer to the beginning of the selected font table
-	pFont = (unsigned char *)FONT8x16;
+	pFont = (prog_uchar *)FONT8x16;
 	// get the nColumns, nRows and nBytes
-	nCols = *pFont;
-	nRows = *(pFont + 1);
-	nBytes = *(pFont + 2);
+	nCols = pgm_read_byte(pFont);
+	nRows = pgm_read_byte(pFont + 1);
+	nBytes = pgm_read_byte(pFont + 2);
 	// get pointer to the last byte of the desired character
 	pChar = pFont + (nBytes * (c - 0x1F)) + nBytes - 1;
 
@@ -396,7 +396,7 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 		// loop on each row, working backwards from the bottom to the top
 		for (i = nRows - 1; i >= 0; i--) {
 			// copy pixel row from font table and then decrement row
-			PixelRow = *pChar++;
+			PixelRow = pgm_read_byte(pChar++);
 			// loop on each pixel in the row (left to right)
 			// Note: we do two pixels each loop
 			Mask = 0x80;
@@ -441,7 +441,7 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 		pChar+=nBytes-1;  // stick pChar at the end of the row - gonna reverse print on phillips
 		for (i = nRows - 1; i >= 0; i--) {
 			// copy pixel row from font table and then decrement row
-			PixelRow = *pChar--;
+			PixelRow = pgm_read_byte(pChar--);
 			// loop on each pixel in the row (left to right)
 			// Note: we do two pixels each loop
 			Mask = 0x01;  // <- opposite of epson
