@@ -14,12 +14,7 @@ Repository Contents
 * **/hardware** - Hardware design files for the Color LCD Shield PCB. These files were designed in Eagle CAD.
 * **/firmware** - Example firmware for the Color LCD Shield.
 
-Hardware License
+License Information
 ----------------
 
-???
-
-Firmware License
-----------------
-
-Example firmware in this repository is licensed under [Creative Commons Share-alike 3.0](http://creativecommons.org/licenses/by-sa/3.0/).
+The hardware and example firmware are released under [Creative Commons Share-alike 3.0](http://creativecommons.org/licenses/by-sa/3.0/).
