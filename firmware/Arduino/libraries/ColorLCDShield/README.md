@@ -2,12 +2,6 @@
 
 This is a simple Arduino library for use specifically with SparkFun Electronics' [Color LCD Shield](http://www.sparkfun.com/products/9363). It'll no doubt work with other incarnations of LCD breakouts and what not, you just might have to do some modifying of the pin defintions.
 
-<div align="center"><a href="http://www.sparkfun.com/products/9363"><img src="http://sfecdn.s3.amazonaws.com/tutorialimages/ColorLCDShieldLanding/lcd-clock-500.JPG"></a></div>
-
-The Color LCD Shield interfaces your Arduino with a knock-off [132x132 Nokia 6100 LCD](https://www.sparkfun.com/products/569). The LCD is available with one of two controlling drivers - a [Philips PCF8833](https://dlnmh9ip6v2uc.cloudfront.net/datasheets/LCD/Color/PCF8833_1.pdf) or an Epson [S1D15G10](https://dlnmh9ip6v2uc.cloudfront.net/datasheets/LCD/Color/S1D15G10D08BE_TM_MF1493_03.pdf). This library attempts to function with either of the controllers.
-
-A really great resource for working with both the Epson and Philips controllers is Jim Lynch's [Display Driver tutorial](http://www.sparkfun.com/tutorial/Nokia%206100%20LCD%20Display%20Driver.pdf). Much of this example code stems from that document.
-
 ## License
 Creative Commons Share-alike 3.0 ([CC-BY SA 3.0](http://creativecommons.org/licenses/by-sa/3.0/)). Use this code however you'd like, just keep this license and attribute. Let us know if you make hugely, awesome, great changes.
 
