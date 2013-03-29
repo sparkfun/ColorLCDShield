@@ -21,6 +21,7 @@
 //#include <WProgram.h>
 
 #include <inttypes.h>
+#include <avr/pgmspace.h>
 
 //*******************************************************
 //						Macros
