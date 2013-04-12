@@ -58,6 +58,9 @@ Draws a rectangle with opposing corners at x0,y0 and x1,y1. A 1 for fill will fi
 ###void printLogo(void)
 Prints the SparkFun logo. Good example of how to print a bitmap, though!
 
+###void printBMP(char[2048])
+Prints a bitmap in monochrome on the screen. The bitmap can't be larger than 2048 bytes, and must be encoded into C hexadecimal in horizontal order. See the printBitmap example for more information.
+
 ###void on(void)
 Turns the display on.
 
