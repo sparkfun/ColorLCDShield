@@ -1,5 +1,5 @@
 #######################################
-# Syntax Coloring Map For Twitter
+# Syntax Coloring Map 
 #######################################
 
 #######################################
@@ -22,7 +22,7 @@ setLine	KEYWORD2
 setRect	KEYWORD2
 setCircle	KEYWORD2
 setArc	KEYWORD2
-
+printBMP KEYWORD2
 #######################################
 # Constants (LITERAL1)
 #######################################
