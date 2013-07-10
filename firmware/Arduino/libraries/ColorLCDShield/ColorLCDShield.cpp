@@ -27,13 +27,13 @@ LCDShield::LCDShield()
 {
 
 #if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
-	DDRB = ((1<<DIO)|(1<<SCK_PIN));     //Set DIO and SCK_PIN pins on PORTB as outputs
-	DDRH = ((1<<CS)|(1<<LCD_RES));  //Set CS and RES pins PORTH as outputs
+	DDRB = ((1<<LCD_PIN_DIO)|(1<<LCD_PIN_SCK));     //Set DIO and SCK pins on PORTB as outputs
+	DDRH = ((1<<LCD_PIN_CS)|(1<<LCD_PIN_RES));  //Set CS and RES pins PORTH as outputs
 #elif defined(__AVR_ATmega32U4__)
-	DDRB = (1<<LCD_RES) | (1<<CS) | (1<<DIO);
-	DDRC = (1<<SCK_PIN);
+	DDRB = (1<<LCD_PIN_RES) | (1<<LCD_PIN_CS) | (1<<LCD_PIN_DIO);
+	DDRC = (1<<LCD_PIN_SCK);
 #else
-	DDRB = ((1<<CS)|(1<<DIO)|(1<<SCK_PIN)|(1<<LCD_RES));  //Set the control pins as outputs
+	DDRB = ((1<<LCD_PIN_CS)|(1<<LCD_PIN_DIO)|(1<<LCD_PIN_SCK)|(1<<LCD_PIN_RES));  //Set the control pins as outputs
 #endif
 
 	DDRD	=	0x00;
@@ -44,56 +44,56 @@ void LCDShield::LCDCommand(unsigned char data)
 {
 	char jj;
 
-	cbi(LCD_PORT_CS, CS);     // enable chip
-	cbi(LCD_PORT_DIO, DIO);   // output low on data out (9th bit low = command)
+	cbi(LCD_PORT_CS, LCD_PIN_CS);     // enable chip
+	cbi(LCD_PORT_DIO, LCD_PIN_DIO);   // output low on data out (9th bit low = command)
 
-	cbi(LCD_PORT_SCK, SCK_PIN);   // send clock pulse
+	cbi(LCD_PORT_SCK, LCD_PIN_SCK);   // send clock pulse
 	delayMicroseconds(1);
-	sbi(LCD_PORT_SCK, SCK_PIN);
+	sbi(LCD_PORT_SCK, LCD_PIN_SCK);
 
 	for (jj = 0; jj < 8; jj++)
 	{
 		if ((data & 0x80) == 0x80)
-			sbi(LCD_PORT_DIO, DIO);
+			sbi(LCD_PORT_DIO, LCD_PIN_DIO);
 		else
-			cbi(LCD_PORT_DIO, DIO);
+			cbi(LCD_PORT_DIO, LCD_PIN_DIO);
 
-		cbi(LCD_PORT_SCK, SCK_PIN); // send clock pulse
+		cbi(LCD_PORT_SCK, LCD_PIN_SCK); // send clock pulse
 		delayMicroseconds(1);
-		sbi(LCD_PORT_SCK, SCK_PIN);
+		sbi(LCD_PORT_SCK, LCD_PIN_SCK);
 
 		data <<= 1;
 	}
 
-	sbi(LCD_PORT_CS, CS);     // disable
+	sbi(LCD_PORT_CS, LCD_PIN_CS);     // disable
 }
 
 void LCDShield::LCDData(unsigned char data)
 {
 	char j;
 
-	cbi(LCD_PORT_CS, CS);     // enable chip
-	sbi(LCD_PORT_DIO, DIO);   // output high on data out (9th bit high = data)
+	cbi(LCD_PORT_CS, LCD_PIN_CS);     // enable chip
+	sbi(LCD_PORT_DIO, LCD_PIN_DIO);   // output high on data out (9th bit high = data)
 
-	cbi(LCD_PORT_SCK, SCK_PIN);   // send clock pulse
+	cbi(LCD_PORT_SCK, LCD_PIN_SCK);   // send clock pulse
 	delayMicroseconds(1);
-	sbi(LCD_PORT_SCK, SCK_PIN);   // send clock pulse
+	sbi(LCD_PORT_SCK, LCD_PIN_SCK);   // send clock pulse
 
 	for (j = 0; j < 8; j++)
 	{
 		if ((data & 0x80) == 0x80)
-			sbi(LCD_PORT_DIO, DIO);
+			sbi(LCD_PORT_DIO, LCD_PIN_DIO);
 		else
-			cbi(LCD_PORT_DIO, DIO);
+			cbi(LCD_PORT_DIO, LCD_PIN_DIO);
 	
-		cbi(LCD_PORT_SCK, SCK_PIN); // send clock pulse
+		cbi(LCD_PORT_SCK, LCD_PIN_SCK); // send clock pulse
 		delayMicroseconds(1);
-		sbi(LCD_PORT_SCK, SCK_PIN);
+		sbi(LCD_PORT_SCK, LCD_PIN_SCK);
 
 		data <<= 1;
 	}
 
-	LCD_PORT_CS	|=	(1<<CS);  // disable
+	LCD_PORT_CS	|=	(1<<LCD_PIN_CS);  // disable
 }
 
 void LCDShield::init(int type, bool colorSwap)
@@ -101,17 +101,17 @@ void LCDShield::init(int type, bool colorSwap)
 	driver = type;
 	
 	// Initialize the control pins, and reset display:
-	cbi(LCD_PORT_SCK, SCK_PIN);	// CLK = LOW
-	cbi(LCD_PORT_DIO, DIO);		// DIO = LOW
+	cbi(LCD_PORT_SCK, LCD_PIN_SCK);	// CLK = LOW
+	cbi(LCD_PORT_DIO, LCD_PIN_DIO);		// DIO = LOW
 	delayMicroseconds(10);		// 10us delay
-	sbi(LCD_PORT_CS, CS);		// CS = HIGH
+	sbi(LCD_PORT_CS, LCD_PIN_CS);		// CS = HIGH
 	delayMicroseconds(10);		// 10uS Delay
-	cbi(LCD_PORT_RES, LCD_RES);	// RESET = LOW
+	cbi(LCD_PORT_RES, LCD_PIN_RES);	// RESET = LOW
 	delay(200);					// 200ms delay
-	sbi(LCD_PORT_RES, LCD_RES);	// RESET = HIGH
+	sbi(LCD_PORT_RES, LCD_PIN_RES);	// RESET = HIGH
 	delay(200);					// 200ms delay
-	sbi(LCD_PORT_SCK, SCK_PIN);	// SCK_PIN = HIGH
-	sbi(LCD_PORT_DIO, DIO);		// DIO = HIGH
+	sbi(LCD_PORT_SCK, LCD_PIN_SCK);	// SCK = HIGH
+	sbi(LCD_PORT_DIO, LCD_PIN_DIO);		// DIO = HIGH
 	delayMicroseconds(10);		// 10us delay
 	
 	if (driver == EPSON)

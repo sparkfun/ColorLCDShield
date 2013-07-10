@@ -154,10 +154,10 @@
 
 #if defined(__AVR_ATmega2560__) || defined(__AVR_ATmega1280__)
 	//*	Arduino Mega 2560 bit numbers
-	#define LCD_RES		5		// D8
-	#define CS			6		// D9
-	#define DIO			5		// D11
-	#define SCK_PIN			7		// D13
+	#define LCD_PIN_RES		5		// D8
+	#define LCD_PIN_CS			6		// D9
+	#define LCD_PIN_DIO			5		// D11
+	#define LCD_PIN_SCK			7		// D13
 
 	//*	Arduino Mega ports
 	//* NOTE: See LCDShield::LCDShield() if making changes here
@@ -167,10 +167,10 @@
 	#define	LCD_PORT_DIO	PORTB
 #elif defined (__AVR_ATmega32U4__)
 	//*	Standard Arduino Leonardo port bits
-	#define LCD_RES		4		// D8
-	#define CS			5		// D9
-	#define DIO			7		// D11
-	#define SCK_PIN		7		// D13
+	#define LCD_PIN_RES		4		// D8
+	#define LCD_PIN_CS			5		// D9
+	#define LCD_PIN_DIO			7		// D11
+	#define LCD_PIN_SCK		7		// D13
 
 	//*	Arduino Leonardo ports:
 	#define	LCD_PORT_RES	PORTB
@@ -179,10 +179,10 @@
 	#define	LCD_PORT_SCK	PORTC
 #else
 	//*	Arduino Duemilanove bit numbers
-	#define LCD_RES		0		// D8
-	#define CS			1		// D9
-	#define DIO			3		// D11
-	#define SCK_PIN			5		// D13
+	#define LCD_PIN_RES		0		// D8
+	#define LCD_PIN_CS			1		// D9
+	#define LCD_PIN_DIO			3		// D11
+	#define LCD_PIN_SCK			5		// D13
 	//#define LCD_PORT	PORTB
 
 	//*	Arduino Duemilanove ports
