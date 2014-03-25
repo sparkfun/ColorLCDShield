@@ -605,6 +605,29 @@ void LCDShield::printLogo(void)
 	}
 }
 
+void LCDShield::printBMP(char image_main[2048]){ //prints an image (BMP)
+    int x = 4, y = 0, image_ix = 0, z; //starts on row 0
+    char image;
+    
+    for (image_ix = 0; image_ix < 2048; image_ix++){ //for all the bits in the image
+        image = image_main[image_ix];
+        
+        for (z = 0; z <8; z++){ //for each bit in the byte
+            if ((image & 0x80) == 0x80){ //if the bit is equal to 0, sets to white
+                setPixel(WHITE, y, x);
+            } else {
+                setPixel(BLUE, y, x); //else sets it to black
+            }
+            x++; //adds one to x
+            if (x == 132){ //if the end of the screen is reached
+                x = 4; //sets x to 4 so not to be missed on edge of screen
+                y++; //goes down a row
+            }
+            image <<= 1; //resets logo
+        }
+    }
+}
+
 void LCDShield::off(void)
 {
 	if (driver)	// If it's an epson
