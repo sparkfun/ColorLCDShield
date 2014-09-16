@@ -1,6 +1,8 @@
 Color LCD Shield
 ================
 
+NOTE: This is a faster version, and can use SPI. Bitbanging data sucks, and it is slow. There are also several other speedup enhancements and support for clones of this board that can adjust display brightness via PWM.
+
 [![Color LCD Shield](https://dlnmh9ip6v2uc.cloudfront.net/images/products/9/3/6/3/09363-01b_i_ma.jpg)  
 *Color LCD Shield (LCD-09363)*](https://www.sparkfun.com/products/9363)
 

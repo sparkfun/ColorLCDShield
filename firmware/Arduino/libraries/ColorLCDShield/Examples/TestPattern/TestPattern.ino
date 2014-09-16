@@ -21,6 +21,17 @@ LCDShield lcd;
 int buttons[3] = {3, 4, 5};  // S1 = 3, S2 = 4, S3 = 5
 signed char cont = -51;  // Philips medium contrast
 //signed char cont = 40;  // Epson medium contrast
+void testPattern()
+{
+  lcd.setRect(80, 2, 131, 19, 1, WHITE);
+  lcd.setRect(80, 19, 131, 35, 1, YELLOW);
+  lcd.setRect(80, 35, 131, 51, 1, CYAN);
+  lcd.setRect(80, 51, 131, 67, 1, GREEN);
+  lcd.setRect(80, 67, 131, 83, 1, MAGENTA);
+  lcd.setRect(80, 83, 131, 99, 1, RED);
+  lcd.setRect(80, 99, 131, 115, 1, BLUE);
+  lcd.setRect(80, 115, 131, 131, 1, BLACK);
+}
 
 void setup()
 {
@@ -66,14 +77,3 @@ void loop()
   delay(100);  // Delay to give each button press a little more meaning
 }
 
-void testPattern()
-{
-  lcd.setRect(80, 2, 131, 19, 1, WHITE);
-  lcd.setRect(80, 19, 131, 35, 1, YELLOW);
-  lcd.setRect(80, 35, 131, 51, 1, CYAN);
-  lcd.setRect(80, 51, 131, 67, 1, GREEN);
-  lcd.setRect(80, 67, 131, 83, 1, MAGENTA);
-  lcd.setRect(80, 83, 131, 99, 1, RED);
-  lcd.setRect(80, 99, 131, 115, 1, BLUE);
-  lcd.setRect(80, 115, 131, 131, 1, BLACK);
-}
