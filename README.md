@@ -1,6 +1,8 @@
 Color LCD Shield
 ================
 
+***NOTE:*** *This product has been retired from our catalog. If you are looking for more up-to-date info, please check out the [forum](https://forum.sparkfun.com/), [comments here on GitHub](https://github.com/sparkfun/ColorLCDShield/issues), or [IRC channel](https://www.sparkfun.com/news/263) to see how other users are still hacking and improving on this product.*
+
 [![Color LCD Shield](https://dlnmh9ip6v2uc.cloudfront.net/images/products/9/3/6/3/09363-01b_i_ma.jpg)  
 *Color LCD Shield (LCD-09363)*](https://www.sparkfun.com/products/9363)
 
