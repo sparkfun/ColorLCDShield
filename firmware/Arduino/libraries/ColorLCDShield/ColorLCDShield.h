@@ -18,6 +18,8 @@
 #define PHILIPS     0
 #define EPSON		1
 
+typedef unsigned char prog_uchar;
+
 //#include <WProgram.h>
 
 #include <inttypes.h>
