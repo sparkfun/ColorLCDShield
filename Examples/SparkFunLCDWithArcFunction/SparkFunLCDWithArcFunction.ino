@@ -3,7 +3,7 @@
 // This sample sketch illustrates the new setArf method and an updated setCircle method
 // which includes setting a Line Thickness in Pixels and the ability to Fill-In the circle.
 
-#include <ColorLCDShield.h>
+#include <SparkFunColorLCDShield.h>
 
 LCDShield lcd;  // Creates an LCDShield, named lcd
 

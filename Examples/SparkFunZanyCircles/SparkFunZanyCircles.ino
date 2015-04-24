@@ -1,5 +1,5 @@
 /*
-  ZanyCircles - An example sketch for the Color LCD Shield Library
+  ZanyCircles - An example sketch for the SparkFun Color LCD Shield Library
   by: Jim Lindblom
   SparkFun Electronics
   date: 6/23/11
@@ -8,9 +8,9 @@
   attribute. Let me know if you make hugely, awesome, great changes.
   
   This simple sketch shows how you can use setCircle and setPixel
-  with the Color LCD Shield library. 
+  with the SparkFun Color LCD Shield library. 
 */
-#include <ColorLCDShield.h>
+#include <SparkFunColorLCDShield.h>
 
 #define CIRCLES 10  // Number of zany circles in display
 #define BACKGROUND ORANGE  // Color of background

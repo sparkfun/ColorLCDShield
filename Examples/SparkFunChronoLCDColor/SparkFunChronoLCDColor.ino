@@ -1,5 +1,5 @@
 /*
-  ChronoLCD Color - An example sketch for the Color LCD Shield Library
+  ChronoLCD Color - An example sketch for the SparkFun Color LCD Shield Library
   by: Jim Lindblom
   SparkFun Electronics
   date: 6/23/11
@@ -19,10 +19,10 @@
   back up.
   
   This example code should give you a good idea of how to use
-  the setCircle, setLine, and setStr functions of the Color LCD
+  the setCircle, setLine, and setStr functions of the SparkFun Color LCD
   Shield Library.
 */
-#include <ColorLCDShield.h>
+#include <SparkFunColorLCDShield.h>
 
 // Enter the time below in 12-hr format
 #define HOURS 10

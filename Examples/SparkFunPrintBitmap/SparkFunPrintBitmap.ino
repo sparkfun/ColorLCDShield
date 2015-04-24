@@ -1,5 +1,5 @@
 /*
-  PrintBitmap - An example sketch for the Color LCD Shield Library
+  PrintBitmap - An example sketch for the SparkFun Color LCD Shield Library
   by: Jim Lindblom
   SparkFun Electronics
   date: 6/23/11
@@ -15,7 +15,7 @@
   Bitmap printing additions made by Jacob Unwin (http://www.jacob-unwin.com )
   */
   
-  #include <ColorLCDShield.h>
+  #include <SparkFunColorLCDShield.h>
   
   LCDShield lcd;
   

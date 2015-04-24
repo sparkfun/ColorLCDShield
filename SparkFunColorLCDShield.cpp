@@ -12,7 +12,7 @@
   Thanks to Coleman Sellers and Harold Timmis for help getting it to work with the Phillips Driver 7-31-2011
 */
 
-#include "ColorLCDShield.h"
+#include "SparkFunColorLCDShield.h"
 
 /*extern "C" {
 	#include "wiring.h"

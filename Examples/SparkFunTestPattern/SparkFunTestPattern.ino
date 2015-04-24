@@ -1,5 +1,5 @@
 /*
-  TestPattern - An example sketch for the Color LCD Shield Library
+  TestPattern - An example sketch for the SparkFun Color LCD Shield Library
   by: Jim Lindblom
   SparkFun Electronics
   date: 6/23/11
@@ -14,7 +14,7 @@
   Hit S1 to increase the contrast, S2 decreases the contrast, and
   S3 sets the contrast back to the middle.
 */
-#include <ColorLCDShield.h>
+#include <SparkFunColorLCDShield.h>
 
 LCDShield lcd;
 

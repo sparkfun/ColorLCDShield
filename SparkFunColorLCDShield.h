@@ -11,8 +11,8 @@
   This is based on code by Mark Sproul, and Peter Davenport.
 */
 
-#ifndef ColorLCDShield_H
-#define ColorLCDShield_H
+#ifndef SparkFunColorLCDShield_H
+#define SparkFunColorLCDShield_H
 
 #define PHILLIPS	0
 #define PHILIPS     0
@@ -385,4 +385,4 @@ public:
 	void off(void);
 };
 
-#endif	// ColorLCDShield_H
+#endif	// SparkFunColorLCDShield_H
