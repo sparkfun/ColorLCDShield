@@ -1,9 +1,9 @@
-Color LCD Shield
-================
+SparkFun Color LCD Shield
+==========================
 
 ***NOTE:*** *This product has been retired from our catalog. If you are looking for more up-to-date info, please check out the [forum](https://forum.sparkfun.com/), [comments here on GitHub](https://github.com/sparkfun/ColorLCDShield/issues), or [IRC channel](https://www.sparkfun.com/news/263) to see how other users are still hacking and improving on this product.*
 
-[![Color LCD Shield](https://dlnmh9ip6v2uc.cloudfront.net/images/products/9/3/6/3/09363-01b_i_ma.jpg)  
+[![SparkFun Color LCD Shield](https://dlnmh9ip6v2uc.cloudfront.net/images/products/9/3/6/3/09363-01b_i_ma.jpg)  
 *Color LCD Shield (LCD-09363)*](https://www.sparkfun.com/products/9363)
 
 The Color LCD Shield interfaces your Arduino with a knock-off [132x132 Nokia 6100 LCD](https://www.sparkfun.com/products/569). The LCD is available with one of two controlling drivers - a [Philips PCF8833](https://dlnmh9ip6v2uc.cloudfront.net/datasheets/LCD/Color/PCF8833_1.pdf) or an Epson [S1D15G10](https://dlnmh9ip6v2uc.cloudfront.net/datasheets/LCD/Color/S1D15G10D08BE_TM_MF1493_03.pdf).
@@ -14,7 +14,7 @@ Repository Contents
 -------------------
 
 * **/hardware** - Hardware design files for the Color LCD Shield PCB. These files were designed in Eagle CAD.
-* **/firmware** - Example firmware for the Color LCD Shield.
+* **/Libraries** - Arduino library for use with the SparkFun Color LCD Shield. 
 
 License Information
 ----------------
