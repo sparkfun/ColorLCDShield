@@ -1,0 +1,28 @@
+#######################################
+# Syntax Coloring Map 
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+LCDShield	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+init	KEYWORD2
+clear	KEYWORD2
+contrast	KEYWORD2
+setPixel	KEYWORD2
+setChar	KEYWORD2
+setStr	KEYWORD2
+setLine	KEYWORD2
+setRect	KEYWORD2
+setCircle	KEYWORD2
+setArc	KEYWORD2
+printBMP KEYWORD2
+#######################################
+# Constants (LITERAL1)
+#######################################
