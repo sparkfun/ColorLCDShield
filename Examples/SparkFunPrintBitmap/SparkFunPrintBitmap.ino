@@ -1,5 +1,5 @@
 /*
-  ChronoLCD Color - An example sketch for the Color LCD Shield Library
+  PrintBitmap - An example sketch for the Color LCD Shield Library
   by: Jim Lindblom
   SparkFun Electronics
   date: 6/23/11
