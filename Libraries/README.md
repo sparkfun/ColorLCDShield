@@ -10,10 +10,10 @@ Directory Contents
 
 
 
-BUILD INSTRUCTIONS: 
---------------------
+Update Library Instructions: 
+----------------------------
 If you would like the most up-to-date version of the library, you must use the following commands on the command line. 
 
-$git subtree add -P Arduino --squash git@github.com:sparkfun/SparkFun_Color_LCD_Shield_Arduino_Library.git master
+$git subtree add -P Libraries/Arduino --squash git@github.com:sparkfun/SparkFun_Color_LCD_Shield_Arduino_Library.git master
 
-$git subtree pull -P Arduino --squash git@github.com:sparkfun/SparkFun_Color_LCD_Shield_Arduino_Library.git master
+$git subtree pull -P Libraries/Arduino --squash git@github.com:sparkfun/SparkFun_Color_LCD_Shield_Arduino_Library.git master
