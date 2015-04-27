@@ -6,7 +6,7 @@ Libraries for use in different environments.
 
 Directory Contents
 -------------------
-* **/Arduino** - [Arduino IDE](http://www.arduino.cc/en/Main/Software) library. Currently version 1.0
+* **/Arduino** - [Arduino IDE](http://www.arduino.cc/en/Main/Software) library. Currently version 1.0.1
 
 
 
