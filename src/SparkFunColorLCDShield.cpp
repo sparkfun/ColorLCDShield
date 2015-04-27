@@ -368,11 +368,11 @@ void LCDShield::setChar(char c, int x, int y, int fColor, int bColor)
 	unsigned char   Mask;
 	unsigned int    Word0;
 	unsigned int    Word1;
-	prog_uchar   *pFont;
-	prog_uchar   *pChar;
+	const unsigned char   *pFont;
+	const unsigned char   *pChar;
 
 	// get pointer to the beginning of the selected font table
-	pFont = (prog_uchar *)FONT8x16;
+	pFont = (const unsigned char *)FONT8x16;
 	// get the nColumns, nRows and nBytes
 	nCols = pgm_read_byte(pFont);
 	nRows = pgm_read_byte(pFont + 1);
